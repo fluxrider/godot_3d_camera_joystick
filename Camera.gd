@@ -18,6 +18,17 @@ func _process(delta):
 	# axis deadzone
 	if abs(h) < 0.05: h = 0
 	if abs(v) < 0.05: v = 0
+ 	# read keyboard
+	var key_le = Input.get_action_strength("cam_left")
+	var key_ri = Input.get_action_strength("cam_right")
+	var key_dw = Input.get_action_strength("cam_down")
+	var key_up = Input.get_action_strength("cam_up")
+	if key_le != 0 and -key_le < h: h = -key_le
+	if key_ri != 0 and key_ri > h: h = key_ri
+	if key_dw != 0 and key_dw > v: v = key_dw
+	if key_up != 0 and -key_up < v: v = -key_up
+
+
 	# move camera
 	elevation += v * v_speed * delta
 	azymuth += h * h_speed * delta
@@ -39,4 +50,3 @@ func _process(delta):
 	self.translation = t + p
 	# look at target
 	self.look_at(t, p_up - p)
-	
